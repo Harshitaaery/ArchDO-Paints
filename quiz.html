@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ArchDO</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="assets/logo.png" alt="ArchDO Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#ourcompany">About Us</a></li>
+                    <li><a href="#">Explore Colours</a></li>
+                    <li><a href="#workflow">MBTI Personality Types</a></li>
+                    <li><a href="#about">Contact Us</a></li>
+                </ul>
+            </nav>
+            <a href="quiz.html"><button class="contact-button">
+            Take the Quiz
+        </button></a>
+        </div>
+    </header>
+    <main>
+        <form id="quizForm" onsubmit="return calculateResults()">
+            <h2>Answer the following questions:</h2>
+            <!-- Extroversion vs Introversion -->
+            <label>1. Do you feel more energized after spending time with a group of people?</label><br>
+            <input type="radio" name="question1" value="E"> Yes<br>
+            <input type="radio" name="question1" value="I"> No<br><br>
+
+            <label>2. Do you prefer being in the center of attention rather than being in the background?</label><br>
+            <input type="radio" name="question2" value="E"> Yes<br>
+            <input type="radio" name="question2" value="I"> No<br><br>
+
+            <label>3. Do you enjoy working in a team more than working alone?</label><br>
+            <input type="radio" name="question3" value="E"> Yes<br>
+            <input type="radio" name="question3" value="I"> No<br><br>
+
+            <!-- Sensing vs Intuition -->
+            <label>4. Do you focus on the facts and details rather than ideas and possibilities?</label><br>
+            <input type="radio" name="question4" value="S"> Yes<br>
+            <input type="radio" name="question4" value="N"> No<br><br>
+
+            <label>5. Do you prefer concrete facts rather than abstract theories?</label><br>
+            <input type="radio" name="question5" value="S"> Yes<br>
+            <input type="radio" name="question5" value="N"> No<br><br>
+
+            <label>6. Do you notice details in your surroundings more easily than you think about the future?</label><br>
+            <input type="radio" name="question6" value="S"> Yes<br>
+            <input type="radio" name="question6" value="N"> No<br><br>
+
+            <!-- Thinking vs Feeling -->
+            <label>7. Do you prefer to make decisions based on logic and reason rather than emotions?</label><br>
+            <input type="radio" name="question7" value="T"> Yes<br>
+            <input type="radio" name="question7" value="F"> No<br><br>
+
+            <label>8. Do you consider what is fair and just when making decisions rather than how it will impact people emotionally?</label><br>
+            <input type="radio" name="question8" value="T"> Yes<br>
+            <input type="radio" name="question8" value="F"> No<br><br>
+
+            <label>9. Do you tend to be more objective and detached rather than empathetic when dealing with problems?</label><br>
+            <input type="radio" name="question9" value="T"> Yes<br>
+            <input type="radio" name="question9" value="F"> No<br><br>
+
+            <!-- Judging vs Perceiving -->
+            <label>10. Do you like to plan things in advance rather than leaving things open-ended?</label><br>
+            <input type="radio" name="question10" value="J"> Yes<br>
+            <input type="radio" name="question10" value="P"> No<br><br>
+
+            <label>11. Do you prefer structured schedules over spontaneous activities?</label><br>
+            <input type="radio" name="question11" value="J"> Yes<br>
+            <input type="radio" name="question11" value="P"> No<br><br>
+
+            <label>12. Do you feel more comfortable when decisions are made rather than when things are left undecided?</label><br>
+            <input type="radio" name="question12" value="J"> Yes<br>
+            <input type="radio" name="question12" value="P"> No<br><br>
+
+            <!-- Additional questions for accuracy -->
+            <label>13. Do you focus more on immediate needs rather than long-term goals?</label><br>
+            <input type="radio" name="question13" value="S"> Yes<br>
+            <input type="radio" name="question13" value="N"> No<br><br>
+
+            <label>14. Do you tend to analyze situations more than you reflect on how they feel?</label><br>
+            <input type="radio" name="question14" value="T"> Yes<br>
+            <input type="radio" name="question14" value="F"> No<br><br>
+
+            <label>15. Do you prefer finishing a project once started rather than working on multiple things at once?</label><br>
+            <input type="radio" name="question15" value="J"> Yes<br>
+            <input type="radio" name="question15" value="P"> No<br><br>
+
+            <button type="submit" class="contact-button">Get My Colors</button>
+        </form>
+    </main>
+
+    <script>
+        function calculateResults() {
+            const form = document.forms['quizForm'];
+            const EorI = [form['question1'].value, form['question2'].value, form['question3'].value].filter(Boolean).sort()[1];
+            const SorN = [form['question4'].value, form['question5'].value, form['question6'].value, form['question13'].value].filter(Boolean).sort()[2];
+            const TorF = [form['question7'].value, form['question8'].value, form['question9'].value, form['question14'].value].filter(Boolean).sort()[2];
+            const JorP = [form['question10'].value, form['question11'].value, form['question12'].value, form['question15'].value].filter(Boolean).sort()[2];
+
+            const personalityType = EorI + SorN + TorF + JorP;
+            let colorPalette = [];
+
+            switch (personalityType) {
+                case 'ESTJ':
+                    colorPalette = ['#FF5733', '#C70039', '#900C3F'];
+                    break;
+                case 'INFP':
+                    colorPalette = ['#33FFBD', '#33D4FF', '#FF5733'];
+                    break;
+                // Add more cases for each MBTI type
+                default:
+                    colorPalette = ['#FFFFFF', '#000000']; // Fallback colors
+            }
+
+            localStorage.setItem('mbtiResults', JSON.stringify({ personalityType, colorPalette }));
+            window.location.href = 'result.html';
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Your Colors</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Shop Your Personality-Based Colors</h1>
+    </header>
+    <main>
+        <div id="shop-container">
+            <h2>Your Color Palette:</h2>
+            <div id="color-palette"></div>
+
+            <h3>Available Wall Paints:</h3>
+            <div id="paint-list">
+                <!-- Paint items will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function () {
+            const resultData = JSON.parse(localStorage.getItem('mbtiResults'));
+            if (resultData) {
+                const paletteDiv = document.getElementById('color-palette');
+                const paintListDiv = document.getElementById('paint-list');
+
+                // Display the color palette
+                resultData.colorPalette.forEach(color => {
+                    const colorDiv = document.createElement('div');
+                    colorDiv.style.backgroundColor = color;
+                    colorDiv.className = 'color-box';
+                    paletteDiv.appendChild(colorDiv);
+
+                    // Create corresponding paint item
+                    const paintItem = document.createElement('div');
+                    paintItem.className = 'paint-item';
+                    paintItem.innerHTML = `
+                        <div class="paint-sample" style="background-color: ${color};"></div>
+                        <p>Wall Paint - Color: ${color.toUpperCase()}</p>
+                        <button class="buy-btn">Buy Now</button>
+                    `;
+                    paintListDiv.appendChild(paintItem);
+                });
+            } else {
+                document.getElementById('shop-container').textContent = "No results found. Please take the quiz first.";
+            }
+        };
+    </script>
+</body>
+</html>

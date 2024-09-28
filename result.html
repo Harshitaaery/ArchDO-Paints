@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Color Palette</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Your MBTI Color Palette</h1>
+    </header>
+    <main>
+        <div id="result-container">
+            <h2>Your Personality Type: <span id="personality-type"></span></h2>
+            <h3>Your Color Palette:</h3>
+            <div id="color-palette"></div>
+            <a href="shop.html" class="shop-btn">Shop These Colors</a>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function () {
+            const resultData = JSON.parse(localStorage.getItem('mbtiResults'));
+            if (resultData) {
+                document.getElementById('personality-type').textContent = resultData.personalityType;
+
+                const paletteDiv = document.getElementById('color-palette');
+                resultData.colorPalette.forEach(color => {
+                    const colorDiv = document.createElement('div');
+                    colorDiv.style.backgroundColor = color;
+                    colorDiv.className = 'color-box';
+                    paletteDiv.appendChild(colorDiv);
+                });
+            } else {
+                document.getElementById('result-container').textContent = "No results found.";
+            }
+        };
+    </script>
+</body>
+</html>
